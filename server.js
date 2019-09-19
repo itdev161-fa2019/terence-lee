@@ -5,7 +5,7 @@ const app = express();
 
 //API endpoints
 app.get('/', (req, res) => 
-    res.send('htp get request sent to root api endpoint')
+    res.send('http get request sent to root api endpoint')
 );
 
 //Connection listener

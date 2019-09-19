@@ -1,0 +1,3 @@
+{
+    "mongodb+srv":"//Terryville:<password>@cluster0-ow9mc.mongodb.net/test?retryWrites=true&w=majority"
+}

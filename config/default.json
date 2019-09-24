@@ -1,3 +1,3 @@
 {
-    "mongoURI":"//Terryville:tkDB2k19+@cluster0-ow9mc.mongodb.net/test?retryWrites=true&w=majority"
+    "mongoURI":"mongodb+srv://Terryville:tkDB2k19@cluster0-ow9mc.mongodb.net/test?retryWrites=true&w=majority"
 }

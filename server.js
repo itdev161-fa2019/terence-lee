@@ -67,6 +67,7 @@ app.post('/api/users', [
             //Save to the db and return
             await user.save();
             
+
             const payload = {
                 user: {
                     id: user.id

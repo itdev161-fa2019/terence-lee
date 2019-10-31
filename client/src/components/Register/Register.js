@@ -42,6 +42,7 @@ const Register = () => {
                 console.log(res.data);
             }
             catch (error) {
+                console.error(error.message);
                 console.error(error.response.data);
                 //return;
             }

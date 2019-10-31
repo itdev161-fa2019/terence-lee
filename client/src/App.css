@@ -25,9 +25,9 @@
   padding-right: 30px;
 }
 
-.App-header ui li {
+.App-header ul li {
   display: inline;
-  text-align:center;
+  text-align: center;
   padding: 10px;
 }
 

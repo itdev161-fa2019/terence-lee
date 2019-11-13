@@ -6,6 +6,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from 'config';
 import User from './models/User';
+import auth from './middleware/auth';
 
 
 //Initialize express application
@@ -28,6 +29,19 @@ app.use(cors({
 app.get('/', (req, res) => 
     res.send('http get request sent to root api endpoint')
 );
+
+/*
+    @route GET /api/auth
+    @desc Authenticate user
+*/
+app.get("/api/auth", auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).send("Unknown server error.");
+    }
+});
 
 /*
     @route POST api/users

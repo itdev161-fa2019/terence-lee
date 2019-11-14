@@ -4,7 +4,7 @@ import {useHistory} from 'react-router-dom';
 
 
 const Login = ({authenticateUser}) => {
-    let history = useHistory();
+    let history = useHistory(); 
     let {userData, setUserData} = useState({
         email: "",
         password: ""
@@ -86,6 +86,6 @@ const Login = ({authenticateUser}) => {
         </div>
       </div>
     );
-}
+};
 
 export default Login;

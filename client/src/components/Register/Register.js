@@ -9,7 +9,7 @@ const Register = ({authenticateUser}) => {
         email: "",
         password: "",
         passwordConfirm: ""
-    })
+    });
     const {errorData, setErrorData} = useState({errors: null});
 
     const { name, email, password, passwordConfirm } = userData;
@@ -21,7 +21,7 @@ const Register = ({authenticateUser}) => {
             ...userData,
             [name]: value
         })
-    }
+    };
 
     const registerUser = async () => {
         if (password !== passwordConfirm) {
@@ -61,7 +61,7 @@ const Register = ({authenticateUser}) => {
 
             authenticateUser();
         }
-    }
+    };
 
     return (
         <div>
@@ -86,7 +86,7 @@ const Register = ({authenticateUser}) => {
                     <div key={error.msg}>{error.msg}</div>)}
             </div>
         </div>
-    )
+    );
 };
 
 

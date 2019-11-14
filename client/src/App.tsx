@@ -12,7 +12,7 @@ class App extends React.Component {
     data: null,
     token: null,
     user: null
-  }
+  };
 
   componentDidMount() {
     axios.get("http://localhost:5000")
@@ -43,11 +43,11 @@ class App extends React.Component {
       };
 
       axios.get("http://localhost:5000/api/auth", config)
-      .then(response => {
+      .then((response) => {
         localStorage.setItem("user", response.data.name);
         this.setState({user: response.data.name});
       })
-      .catch(error => {
+      .catch((error) => {
         localStorage.removeItem("token");
         this.setState({ user: null });
         console.error(`Error logging in: ${error}`);

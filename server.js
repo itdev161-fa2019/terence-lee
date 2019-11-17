@@ -155,7 +155,7 @@ app.post("/api/posts", auth,
 
               try {
                 //Get the user who created the post
-                let user = await User.findOne(req.user.id);
+                const user = await User.findById(req.user.id);
 
                 //Create a new post
                 const post = new Post({
@@ -167,7 +167,6 @@ app.post("/api/posts", auth,
                 //Save to the db and return
                 await post.save();
 
-                //Generate and return JWT token
                 res.json(post);
               } catch (error) {
                 res.status(500).send("Server error");

@@ -1,13 +1,14 @@
 import express from 'express';
-import connectDatabase from './config/db';
 import {check, validationResult} from 'express-validator';
 import cors from 'cors';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from 'config';
+
+import connectDatabase from "./config/db";
 import User from './models/User';
 import auth from './middleware/auth';
-
+import Post from "./models/Post";
 
 //Initialize express application
 const app = express();
@@ -21,6 +22,7 @@ app.use(cors({
     origin: "http://localhost:3000"
 }));
 
+//GET endpoints
 //API endpoints
 /*
     @route GET /
@@ -43,6 +45,7 @@ app.get("/api/auth", auth, async (req, res) => {
     }
 });
 
+//POST endpoints
 /*
     @route POST api/login
     @desc Login user
@@ -129,6 +132,49 @@ app.post('/api/users', [
         }
     }
 });
+
+/*
+    @route POST api/posts
+    @desc Create Post
+*/
+app.post("/api/posts", auth, 
+        [
+            check("title", "Title text is required!")
+                .not()
+                .isEmpty(),
+            check("body", "Body test is required!")
+                .not()
+                .isEmpty()
+        ],
+        async (req, res) => {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+              return res.status(400).json({ errors: errors.array() });
+            } else {
+              const { title, body } = req.body;
+
+              try {
+                //Get the user who created the post
+                let user = await User.findOne(req.user.id);
+
+                //Create a new post
+                const post = new Post({
+                  user: user.id,
+                  title: title,
+                  body: body
+                });
+
+                //Save to the db and return
+                await post.save();
+
+                //Generate and return JWT token
+                res.json(post);
+              } catch (error) {
+                res.status(500).send("Server error");
+              }
+            }
+        }
+    );
 
 const returnToken = (user, res) => {
     const payload = {

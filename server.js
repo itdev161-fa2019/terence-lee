@@ -211,8 +211,8 @@ app.post("/api/posts", auth,
 
 //DELETE endpoints
 /*
-    @route
-    @desc
+    @route Delete /api.posts/:id
+    @desc Delete a post
 */
 app.delete("/api/posts/:id", auth, async(req, res) => {
     try {

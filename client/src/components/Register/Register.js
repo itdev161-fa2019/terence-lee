@@ -10,7 +10,7 @@ const Register = ({authenticateUser}) => {
         password: "",
         passwordConfirm: ""
     });
-    const {errorData, setErrorData} = useState({errors: null});
+    const [errorData, setErrorData] = useState({errors: null});
 
     const { name, email, password, passwordConfirm } = userData;
     const {errors} = errorData;

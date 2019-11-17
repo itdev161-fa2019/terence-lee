@@ -258,7 +258,7 @@ app.put("/api/posts/:id", auth, async(req, res) => {
 
           //Update the post and return
           post.title = title || post.title;
-          post.body = title || post.body;
+          post.body = body || post.body;
           await post.save();
 
     } catch (error) {

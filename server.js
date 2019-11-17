@@ -236,6 +236,37 @@ app.delete("/api/posts/:id", auth, async(req, res) => {
     }
 });
 
+//PUT endpoints
+/*
+    @route PUT api/posts/:id
+    @desc Update a post
+*/
+app.put("/api/posts/:id", auth, async(req, res) => {
+    try {
+          const { title, body } = req.body;
+          const post = await Post.findById(req.params.id);
+
+          //If post wasn't found
+          if (!post) {
+            return res.status(404).json({ msg: "Post not found!" });
+          }
+
+          //Make sure the user created the post
+          if (post.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: "User not authorized!" });
+          }
+
+          //Update the post and return
+          post.title = title || post.title;
+          post.body = title || post.body;
+          await post.save();
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server error");
+    }
+});
+
 const returnToken = (user, res) => {
     const payload = {
         user: {

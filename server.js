@@ -260,6 +260,8 @@ app.put("/api/posts/:id", auth, async(req, res) => {
           post.title = title || post.title;
           post.body = body || post.body;
           await post.save();
+          
+          res.json(post);
 
     } catch (error) {
         console.error(error);

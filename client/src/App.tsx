@@ -5,11 +5,13 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './App.css';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
-
+import Post from "./components/Post/Post";
+import PostList from "./components/PostList/PostList";
 
 class App extends React.Component {
   state = {
     posts: [],
+    post: null,
     token: null,
     user: null
   };
@@ -70,6 +72,13 @@ class App extends React.Component {
     }
   };
 
+  viewPost = post => {
+    console.log(`View ${post.title}`);
+    this.setState({
+      post: post
+    });
+  };
+
   logOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -77,15 +86,15 @@ class App extends React.Component {
   };
 
   render() {
-    let {user, posts} = this.state;
+    let {user, posts, post} = this.state;
     const authProps = {
       authenticateUser: this.authenticateUser
     };
 
     return (
       <Router>
-        <div className = "App">
-        <header className="App-header">
+        <div className="App">
+          <header className="App-header">
             <h1>GoodThings</h1>
             <ul>
               <li>
@@ -95,40 +104,45 @@ class App extends React.Component {
                 <Link to="/register">Register</Link>
               </li>
               <li>
-                {
-                  user ? 
-                  <Link to="" onClick={this.logOut}>Log out</Link> :
+                {user ? (
+                  <Link to="" onClick={this.logOut}>
+                    Log out
+                  </Link>
+                ) : (
                   <Link to="/login">Login</Link>
-                }
+                )}
               </li>
             </ul>
-        </header>
-        <main>
-          <Route exact path="/">
-            {
-              user ?
-                <React.Fragment>
-                  <div>Hello, {user}!</div>
-                  <div>{posts.map(post => (
-                    <div key={post._id}>
-                      <h1>{post.title}</h1>
-                      <p>{post.body}</p>
-                    </div>
-                    ))}
-                  </div>
-                </React.Fragment> :
-                <React.Fragment>
-                  Please Register or Login
-                </React.Fragment>
-            }
-          </Route>
-          <Switch>
-            <Route exact path="/register" render={() => <Register {...authProps}/>} />
-            <Route exact path="/login" render={() => <Login {...authProps} />} />
-          </Switch>
-        </main>
-      </div>
-    </Router>
+          </header>
+          <main>
+            <Switch>
+              <Route exact path="/">
+                {user ? (
+                  <React.Fragment>
+                    <div>Hello, {user}!</div>
+                    <PostList posts={posts} clickPost={this.viewPost}/>
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>Please Register or Login</React.Fragment>
+                )}
+              </Route>
+              <Route path="/posts/:postId">
+                  <Post post={post}/>
+              </Route>
+              <Route
+                exact
+                path="/register"
+                render={() => <Register {...authProps} />}
+              />
+              <Route
+                exact
+                path="/login"
+                render={() => <Login {...authProps} />}
+              />
+            </Switch>
+          </main>
+        </div>
+      </Router>
     );
   }
 }

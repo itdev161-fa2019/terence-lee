@@ -193,7 +193,7 @@ class App extends React.Component {
               <Route path="/new-post">
                 <CreatePost token={token} onPostCreated={this.onPostCreated}/>
               </Route>
-              <Route path="/edit=post/:postId">
+              <Route path="/edit-post/:postId">
                 <EditPost token={token} post={post} onPostUpdated={this.onPostUpdated}/>
               </Route>
               <Route

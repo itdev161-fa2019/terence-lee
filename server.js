@@ -293,7 +293,7 @@ if(process.env.NODE_ENV === "production") {
     });
 }
 
-const port = process.ENV.PORT || 5000; //Number of port to connect to
+const port = process.env.PORT || 5000; //Number of port to connect to
 
 //Connection listener
 app.listen(port, () => console.log(`Express server running on port ${port}`));

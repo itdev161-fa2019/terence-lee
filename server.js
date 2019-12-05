@@ -4,6 +4,7 @@ import cors from 'cors';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from 'config';
+import path from "path";
 
 import connectDatabase from "./config/db";
 import User from './models/User';
@@ -24,13 +25,6 @@ app.use(cors({
 
 //GET endpoints
 //API endpoints
-/*
-    @route GET /
-    @desc Test Endpoint
-*/ 
-app.get('/', (req, res) => 
-    res.send('http get request sent to root api endpoint')
-);
 
 /*
     @route GET /api/auth
@@ -287,7 +281,19 @@ const returnToken = (user, res) => {
     )
 };
 
-const port = 5000; //Number of port to connect to
+//Serve build files in production
+if(process.env.NODE_ENV === "production") {
+    //Set the build folder
+    app.use(express.static("client/build"));
+
+    //Route all requests to serve up the build index file
+    //(i.e., [current working directory]/client/build/index.html)
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(_dirname, "client", "build", "index.html"));
+    });
+}
+
+const port = process.ENV.PORT || 5000; //Number of port to connect to
 
 //Connection listener
 app.listen(port, () => console.log(`Express server running on port ${port}`));
